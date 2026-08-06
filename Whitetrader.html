@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>WHITE TRADERS AI</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+
+body{
+
+background:#08111f;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+min-height:100vh;
+
+}
+
+
+
+.login,
+.dashboard-box{
+
+width:360px;
+
+padding:30px;
+
+border-radius:20px;
+
+background:#101a2d;
+
+box-shadow:0 0 30px cyan;
+
+}
+
+
+
+.logo{
+
+width:90px;
+
+height:90px;
+
+margin:auto;
+
+border-radius:20px;
+
+background:#00a8ff;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:40px;
+
+font-weight:bold;
+
+color:white;
+
+}
+
+
+
+h1{
+
+text-align:center;
+
+color:#00f5d4;
+
+margin:20px 0;
+
+}
+
+
+
+p{
+
+color:white;
+
+margin:10px 0;
+
+}
+
+
+
+input,
+select{
+
+width:100%;
+
+padding:14px;
+
+margin-bottom:15px;
+
+background:#1a2940;
+
+border:none;
+
+border-radius:10px;
+
+color:white;
+
+}
+
+
+
+button{
+
+width:100%;
+
+padding:15px;
+
+background:#00a8ff;
+
+border:none;
+
+border-radius:10px;
+
+color:white;
+
+font-size:18px;
+
+font-weight:bold;
+
+}
+
+
+
+#dashboard{
+
+display:none;
+
+}
+
+
+
+#clock{
+
+color:white;
+
+text-align:center;
+
+font-size:22px;
+
+margin:15px;
+
+}
+
+
+
+#result{
+
+display:none;
+
+background:#18283d;
+
+padding:20px;
+
+border-radius:15px;
+
+margin-top:20px;
+
+}
+
+
+
+#signalText{
+
+font-size:50px;
+
+text-align:center;
+
+font-weight:bold;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="login" id="login">
+
+
+<div style="text-align:center;">
+
+<img src="https://i.ibb.co/jPg1GVdD/20260802-201508.png"
+width="70"
+style="border-radius:50%;">
+
+</div>
+
+<br><br>
+
+
+<h1>
+WHITE TRADERS
+</h1>
+
+
+<p style="text-align:center">
+Premium Login
+</p>
+
+
+<input type="text" id="username" placeholder="Username">
+
+
+<input type="password" id="password" placeholder="Password">
+<div id="loginError" style="display:none;color:#ff3333;text-align:center;margin-bottom:10px;font-weight:bold;">Wrong Username or Password</div>
+
+
+<button onclick="login()">
+
+ACCESS SYSTEM
+
+</button>
+<br>
+<a href="https://t.me/wt_sakib01" target="_blank" rel="noopener" style="display:block;margin-top:20px;">
+<button>Contact Support</button>
+</a>
+<br><br>
+<a href="https://t.me/+fhTEOJq6BC5jMzE1" target="_blank" rel="noopener" style="color:#00f5d4;display:block;text-align:center;">
+Join Telegram Channel
+</a>
+
+
+</div>
+
+
+
+
+<div id="dashboard">
+
+
+<div class="dashboard-box">
+
+<center>
+<img src="https://i.ibb.co/jPg1GVdD/20260802-201508.png" width="70" style="border-radius:50%;"><br><br>
+<h1>
+🤖 SAKIB AI BOT
+</h1>
+
+
+<div id="clock">
+00:00:00
+</div>
+
+
+
+<p>
+Select Asset
+</p>
+
+
+<select id="market">
+
+<option>Polkadot-OTC</option>
+<option>Cosmos-OTC</option>
+<option>GBP/CHF-OTC</option>
+<option>USD/NGN-OTC</option>
+<option>USD/JPY-OTC</option>
+<option>USD/BDT-OTC</option>
+<option>USD/COP-OTC</option>
+<option>USD/ARS-OTC</option>
+<option>USD/PKR-OTC</option>
+<option>USD/IDR-OTC</option>
+
+</select>
+
+
+
+<p>
+Time Frame
+</p>
+
+
+<select id="time">
+<option>1 Minute</option>
+<option>2 Minutes</option>
+<option>5 Minutes</option>
+</select>
+
+
+
+<button onclick="generateSignal()">
+
+GENERATE
+
+</button>
+
+
+
+<div id="result">
+
+
+<h1 style="font-size:22px">
+
+Analysis Complete
+
+</h1>
+
+
+<p id="marketText"></p>
+
+<p id="timeText"></p>
+
+<p id="timeNow"></p>
+
+
+<div id="signalText">
+--
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div><script>
+
+
+function login(){
+let u=document.getElementById("username").value;
+let p=document.getElementById("password").value;
+if(u==="WTSAKIB" && p==="12345"){
+document.getElementById("login").style.display="none";
+document.getElementById("dashboard").style.display="block";
+}else{let e=document.getElementById("loginError");e.style.display="block";}
+}
+
+
+
+
+// LIVE CLOCK
+
+function liveClock(){
+
+let now = new Date();
+
+document.getElementById("clock").innerHTML =
+
+now.toLocaleTimeString("en-GB",{hour12:false});
+
+}
+
+
+setInterval(liveClock,1000);
+
+
+
+
+// SIGNAL SYSTEM
+
+let lastMinute = -1;
+
+
+
+function generateSignal(){
+
+
+
+let now = new Date();
+
+
+let currentMinute = now.getMinutes();
+let currentSecond=now.getSeconds();
+if(currentSecond>30){alert("Generate only between 00-30 seconds.");return;}
+
+
+
+
+// একই মিনিটে দ্বিতীয়বার Signal হবে না
+
+if(currentMinute == lastMinute){
+
+return;
+
+}
+
+
+
+
+// নতুন মিনিটে Signal তৈরি হবে
+
+lastMinute = currentMinute;
+
+
+
+document.getElementById("result").style.display="block";
+
+
+
+document.getElementById("marketText").innerHTML =
+
+"Market : " + document.getElementById("market").value;
+
+
+
+document.getElementById("timeText").innerHTML =
+
+"Timeframe : " + document.getElementById("time").value;
+
+
+
+document.getElementById("timeNow").innerHTML =
+
+"Generated : " +
+
+now.toLocaleTimeString("en-GB",{hour12:false});
+
+
+
+
+
+// CALL PUT GENERATOR
+
+
+let signal = document.getElementById("signalText");
+signal.style.color="#ffffff";
+signal.innerHTML="Analyzing...";
+
+setTimeout(function(){
+
+let signals=["CALL","PUT"];
+let randomSignal=signals[Math.floor(Math.random()*signals.length)];
+signal.innerHTML=randomSignal;
+
+if(randomSignal=="CALL"){
+
+
+signal.style.color="#00ff66";
+
+
+}else{
+signal.style.color="#ff3333";
+}
+
+},3000);
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
