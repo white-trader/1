@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WHITE TRADER'S OCT SIGNAL</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Nunito',sans-serif}
+
+body{
+    background:linear-gradient(135deg,#020617,#0f172a,#020617);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    color:white;
+    padding:20px;
+}
+
+.container{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(16px);
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 25px 60px rgba(0,0,0,.75);
+    width:100%;
+    max-width:420px;
+    text-align:center;
+}
+
+h1{color:#facc15;margin-bottom:18px}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:none;
+    border-radius:8px;
+    background:rgba(255,255,255,.15);
+    color:white;
+    text-align:center;
+    outline:none;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin:6px 0;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:1rem;
+    transition:.3s;
+}
+
+.call-btn{background:#22c55e}
+.put-btn{background:#ef4444}
+.both-btn{background:#f59e0b;color:black}
+.copy-btn{background:#3b82f6}
+.join-btn{background:#8b5cf6}
+
+button:hover{opacity:.9;transform:translateY(-2px)}
+
+.signal-box{
+    margin-top:15px;
+    padding:12px;
+    border-radius:10px;
+    max-height:220px;
+    overflow-y:auto;
+    background:rgba(255,255,255,.1);
+}
+
+.signal{
+    padding:8px;
+    margin-bottom:6px;
+    border-radius:6px;
+    text-align:left;
+}
+
+.call{background:#22c55e}
+.put{background:#ef4444}
+
+#joinGate{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.88);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+</style>
+</head>
+
+<body>
+
+<div id="joinGate">
+    <div class="container">
+        <h1>WHITE TRADER'S OCT SIGNAL</h1>
+        <p>Join Telegram to unlock premium signals</p><br>
+        <a href="https://t.me/+fhTEOJq6BC5jMzE1" target="_blank">
+            <button class="join-btn" onclick="unlock()">Join Telegram</button>
+        </a>
+        <p style="margin-top:10px;font-size:13px;opacity:.7;">
+            Auto unlock in 2 seconds
+        </p>
+    </div>
+</div>
+
+<div class="container" id="app" style="display:none">
+    <h1>WHITE TRADER'S,OTC SIGNALS</h1>
+    <span style="color:#1E90FF;"><b>📊 𝗠𝗧𝗚: 𝟏 𝗦𝘁𝗲𝗽 𝗢𝗡𝗟𝗬</b></span><br>
+<span style="color:#1E90FF;"><b>🛡️ 𝗘𝗻𝘁𝗿𝘆: 𝗪𝗶𝘁𝗵 𝗦𝗮𝗳𝗲𝘁𝘆</b></span>
+
+    <input type="number" id="count" placeholder="Enter signals (1–20)" max="20">
+
+    <button class="call-btn" onclick="generate('CALL')">CALL Signals</button>
+    <button class="put-btn" onclick="generate('PUT')">PUT Signals</button>
+    <button class="both-btn" onclick="generateBoth()">BOTH Signals</button>
+
+    <div id="box" class="signal-box"></div>
+</div>
+
+<script>
+const pairs=["USD/NGN-OTC","USD/BRL-OTC","USD/MXN-OTC","USD/COP-OTC","USD/IDR-OTC","USD/PHP-OTC","USD/PKR-OTC","CAD/CHF-OTC","USD/ARS-OTC","USD/DZD-OTC","USD/BDT-OTC","NZD/USD-OTC"];
+let signals=[];
+
+if(localStorage.getItem("white traders_joined")==="yes"){
+    document.getElementById("joinGate").style.display="none";
+    document.getElementById("app").style.display="block";
+}
+
+function unlock(){
+    localStorage.setItem("white traders_joined","yes");
+    setTimeout(()=>{
+        document.getElementById("joinGate").style.display="none";
+        document.getElementById("app").style.display="block";
+    },2000);
+}
+
+function generate(type){
+    const c=parseInt(document.getElementById("count").value);
+    if(isNaN(c)||c<1||c>20){alert("Enter 1–20");return}
+
+    signals=[];
+    const box=document.getElementById("box");
+    box.innerHTML="";
+    let t=new Date();
+
+    for(let i=0;i<c;i++){
+        t.setMinutes(t.getMinutes()+Math.floor(Math.random()*10+1));
+        const time=t.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+        const pair=pairs[Math.floor(Math.random()*pairs.length)];
+        const s=`${time} - ${pair} - ${type}`;
+
+        signals.push(s);
+
+        const d=document.createElement("div");
+        d.className="signal "+type.toLowerCase();
+        d.innerText=s;
+        box.appendChild(d);
+    }
+}
+
+function generateBoth(){
+    const c=parseInt(document.getElementById("count").value);
+    if(isNaN(c)||c<1||c>20){alert("Enter 1–20");return}
+
+    signals=[];
+    const box=document.getElementById("box");
+    box.innerHTML="";
+    let t=new Date();
+
+    for(let i=0;i<c;i++){
+        t.setMinutes(t.getMinutes()+Math.floor(Math.random()*10+1));
+        const time=t.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+        const pair=pairs[Math.floor(Math.random()*pairs.length)];
+        const type = Math.random() > 0.5 ? "CALL" : "PUT";
+        const s=`${time} - ${pair} - ${type}`;
+
+        signals.push(s);
+
+        const d=document.createElement("div");
+        d.className="signal "+type.toLowerCase();
+        d.innerText=s;
+        box.appendChild(d);
+    }
+}
+
+function copySignals(){
+    if(!signals.length){alert("No signals");return}
+    navigator.clipboard.writeText(signals.join("\n"));
+    alert("Signals copied!");
+}
+</script>
+
+</body>
+</html>
+
